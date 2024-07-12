@@ -3,7 +3,7 @@ Database Models.
 """
 from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import(
+from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
     PermissionsMixin
@@ -22,7 +22,6 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
 
         return user
-
 
     def create_superuser(self, email, password):
         """Create and return a new superuser."""
@@ -56,11 +55,12 @@ class Recipe(models.Model):
     description = models.TextField(blank=True)
     time_minutes = models.IntegerField()
     price = models.DecimalField(max_digits=5, decimal_places=2)
-    link = models.CharField(max_length=255, blank = True)
+    link = models.CharField(max_length=255, blank=True)
     tags = models.ManyToManyField('Tag')
 
     def __str__(self):
         return self.title
+
 
 class Tag(models.Model):
     """Tag for filterin"""
@@ -72,4 +72,3 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
-

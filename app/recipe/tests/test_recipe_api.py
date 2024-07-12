@@ -22,6 +22,7 @@ from recipe.serializers import (
 
 RECIPE_URL = reverse('recipe:recipe-list')
 
+
 def detail_url(recipe_id):
     """Create and return a recipe detail URL."""
     return reverse('recipe:recipe-detail', args=[recipe_id])
@@ -85,7 +86,7 @@ class PrivateRecipeAPITests(TestCase):
         """Test list of recipes is limited to authenitcated user."""
         other_user = create_user(
             email='other@example.com',
-            password = 'password123',
+            password='password123',
         )
         create_recipe(user=other_user)
         create_recipe(user=self.user)
@@ -127,9 +128,9 @@ class PrivateRecipeAPITests(TestCase):
         """Test partial update of a recipe."""
         original_link = 'https://example.com/recipe.pdf'
         recipe = create_recipe(
-            user = self.user,
-            title = 'Sample Recipe Title',
-            link = original_link,
+            user=self.user,
+            title='Sample Recipe Title',
+            link=original_link,
         )
 
         payload = {'title': 'New Recipe Title'}
@@ -145,15 +146,15 @@ class PrivateRecipeAPITests(TestCase):
     def test_full_update(self):
         """Test full update of recipe."""
         recipe = create_recipe(
-            user = self.user,
-            title = 'Sample Recipe Title',
-            link = 'https//example.com/recipe.pdf',
-            description = 'Sample Recipe Description',
+            user=self.user,
+            title='Sample Recipe Title',
+            link='https//example.com/recipe.pdf',
+            description='Sample Recipe Description',
         )
 
         payload = {
             'title': 'New Recipe Title',
-            'link' : 'https//example.com/new-recipe.pdf',
+            'link': 'https//example.com/new-recipe.pdf',
             'description': 'New Recipe Description',
             'time_minutes': 10,
             'price': Decimal('2.50'),
@@ -207,7 +208,7 @@ class PrivateRecipeAPITests(TestCase):
             'title': 'Thai Prawn Curry',
             'time_minutes': 30,
             'price': Decimal('2.50'),
-            'tags': [{'name': 'Thai'},{'name': 'Dinner'}],
+            'tags': [{'name': 'Thai'}, {'name': 'Dinner'}],
         }
 
         res = self.client.post(RECIPE_URL, payload, format='json')
@@ -229,9 +230,9 @@ class PrivateRecipeAPITests(TestCase):
         tag_indian = Tag.objects.create(user=self.user, name='Indian')
         payload = {
             'title': 'Pongal',
-            'time_minutes':60,
+            'time_minutes': 60,
             'price': Decimal('4.50'),
-            'tags': [{'name': 'Indian'},{'name': 'Breakfast'}],
+            'tags': [{'name': 'Indian'}, {'name': 'Breakfast'}],
         }
         res = self.client.post(RECIPE_URL, payload, format='json')
 
@@ -262,7 +263,7 @@ class PrivateRecipeAPITests(TestCase):
 
     def test_update_recipe_assign_tag(self):
         """Test assigning an existing tag when updating a recipe"""
-        tag_breakfast = Tag.objects.create(user = self.user, name='Breakfast')
+        tag_breakfast = Tag.objects.create(user=self.user, name='Breakfast')
         recipe = create_recipe(user=self.user)
         recipe.tags.add(tag_breakfast)
 
